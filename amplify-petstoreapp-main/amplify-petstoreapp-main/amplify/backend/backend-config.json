@@ -1,0 +1,69 @@
+{
+  "api": {
+    "amplifypetstore": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "amplifypetstore",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authamplifypetstore"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "auth": {
+    "amplifypetstore": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL",
+          "NAME",
+          "PROFILE"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE"
+          ]
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      }
+    }
+  },
+  "storage": {
+    "s3amplifypetstoreappstorage4e8baa35": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
+  }
+}
